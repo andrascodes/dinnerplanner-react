@@ -1,30 +1,83 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+
 import './App.css';
-import { Route } from 'react-router-dom';
-import Welcome from './Welcome/Welcome';
-import { modelInstance } from './data/DinnerModel'
-import SelectDish from "./SelectDish/SelectDish";
+
+import Welcome from './Welcome';
+import Sidebar from './Sidebar';
+import DishSearch from './DishSearch';
+import DishDetails from './DishDetails';
+import TotalPrice from './TotalPrice';
+import Recipes from './Recipes';
+
+import createDinnerAPI from './lib/DinnerAPI';
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      title: 'Dinner Planner',
+  
+  state = {
+    numberOfGuests: 1,
+    menu: [],
+    selectedDish: undefined
+  }
+
+  getAllDish = createDinnerAPI(fetch).getAllDish
+  // TODO: implement getDIsh
+  getDish = createDinnerAPI(fetch).getAllDish
+
+  componentDidMount() {
+    // TODO: use localStorage to load the state
+  }
+
+  renderWelcomeView = () => {
+    if(this.state.numberOfGuests === 1 && this.state.menu.length === 0) {
+      return (
+        <div className="WelcomeView">
+          <Welcome />
+        </div>
+      )
+    }
+    else {
+      return <Redirect to="/search"/>
     }
   }
 
+  renderTotalPriceView = () => (
+    <div className="TotalPriceView">
+      <TotalPrice />
+    </div>
+  )
+
+  renderRecipesView = () => (
+    <div className="RecipesView">
+      <Recipes />
+    </div>
+  )
+
+  renderDishSearchView = () => (
+    <div className="DishSearchView">
+      <Sidebar numberOfGuests={this.state.numberOfGuests} menu={this.state.menu}/>
+      <DishSearch getAllDish={this.getAllDish} />
+    </div>
+  )
+
+  renderDishDetails = (props) => (
+    <div className="DishSearchView">
+      <Sidebar numberOfGuests={this.state.numberOfGuests}/>
+      <DishDetails getDish={this.getDish} {...props}/>
+    </div>
+  )
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">{this.state.title}</h1>
-          
-          {/* We rended diffrent component based on the path */}
-          <Route exact path="/" component={Welcome}/>
-          <Route path="/search" render={() => <SelectDish model={modelInstance}/>}/>
-        
-        </header>
-      </div>
+      <Router>
+        <Fragment>
+          <Route exact path="/" render={this.renderWelcomeView}/>
+          <Route exact path="/total" render={this.renderTotalPriceView}/>
+          <Route exact path="/recipes" render={this.renderRecipesView}/>
+          <Route exact path="/search" render={this.renderDishSearchView}/>
+          <Route path="/search/:id" render={this.renderDishDetails}/>
+        </Fragment>
+      </Router>
     );
   }
 }
