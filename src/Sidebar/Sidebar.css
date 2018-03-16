@@ -1,0 +1,32 @@
+.Sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.GuestInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.GuestInputButton {
+  margin: 0em 1em;
+}
+
+.GuestInputField {
+  max-width: 7em;
+}
+
+.GuestInputField label, .GuestInputField input {
+  text-align: center;
+}
+
+.CostColumn {
+  text-align: right;
+}
+
+.ConfirmButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
