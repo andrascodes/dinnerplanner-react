@@ -24,6 +24,7 @@ const alignRight = {'textAlign': 'right' };
 const Sidebar = props => {
   return (
     <div className="Sidebar">
+      
       <AppBar 
         title="My Dinner"
       />

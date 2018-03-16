@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 
+import AppBar from 'material-ui/AppBar';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import './DishSearch.css'
 
 class DishSearch extends Component {
@@ -16,8 +22,39 @@ class DishSearch extends Component {
   
   render() {
     return (
-      <div>
-        <h3>This is the DishSearch</h3>
+      <div className="DishSearch">
+        <AppBar
+          title="Find a dish"
+          showMenuIconButton={false}
+        />
+
+        <div className="SearchInputGroup">
+          <TextField
+            floatingLabelText="Enter keywords"
+          />
+
+          <SelectField
+            multiple={true}
+            hintText="Select a type"
+          >
+            {['All', 'Starter', 'Main Course', 'Dessert'].map(type => (
+              <MenuItem
+                key={type}
+                insetChildren={true}
+                value={type}
+                primaryText={type}
+              />
+            ))}
+          </SelectField>
+
+          <RaisedButton label="Search"/>
+
+        </div>
+
+        <div className="SearchResults">
+          
+        </div>
+
       </div>
     );
   }

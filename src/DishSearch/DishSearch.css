@@ -1,0 +1,14 @@
+.DishSearch {
+  flex: 1 1 75%;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+
+.SearchInputGroup {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.SearchInputGroup > div {
+  margin: 0 1em;
+}
