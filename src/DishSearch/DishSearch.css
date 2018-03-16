@@ -12,3 +12,15 @@
 .SearchInputGroup > div {
   margin: 0 1em;
 }
+
+.SearchResultsGallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.DishThumbnail {
+  height: 12em;
+  max-width: 18em;
+  margin: 0.5em 0.5em;
+}

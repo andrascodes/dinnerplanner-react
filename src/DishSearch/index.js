@@ -6,6 +6,11 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import { GridTile } from 'material-ui/GridList';
+import IconButton from 'material-ui/IconButton';
+import Subheader from 'material-ui/Subheader';
+import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+
 import './DishSearch.css'
 
 class DishSearch extends Component {
@@ -51,7 +56,58 @@ class DishSearch extends Component {
 
         </div>
 
-        <div className="SearchResults">
+        <div className="SearchResultsGallery">
+          <div className="DishThumbnail">
+            <GridTile
+              key={'123'}
+              title={'Hello GridTile'}
+              subtitle={<span>by <b>a Chef</b></span>}
+            >
+              <img src={'https://spoonacular.com/cdn/ingredients_100x100/blue-cheese.png'} />
+            </GridTile>
+          </div>
+
+          <div className="DishThumbnail">
+            <GridTile
+              key={'123'}
+              title={'Hello GridTile'}
+              subtitle={<span>by <b>a Chef</b></span>}
+            >
+              <img src={'https://spoonacular.com/cdn/ingredients_100x100/blue-cheese.png'} />
+            </GridTile>
+          </div>
+
+          <div className="DishThumbnail">
+            <GridTile
+              key={'123'}
+              title={'Hello GridTile'}
+              subtitle={<span>by <b>a Chef</b></span>}
+            >
+              <img src={'https://spoonacular.com/cdn/ingredients_100x100/blue-cheese.png'} />
+            </GridTile>
+          </div>
+
+
+          <div className="DishThumbnail">
+            <GridTile
+              key={'123'}
+              title={'Hello GridTile'}
+              subtitle={<span>by <b>a Chef</b></span>}
+            >
+              <img src={'https://spoonacular.com/cdn/ingredients_100x100/blue-cheese.png'} />
+            </GridTile>
+          </div>
+
+
+          <div className="DishThumbnail">
+            <GridTile
+              key={'123'}
+              title={'Hello GridTile'}
+              subtitle={<span>by <b>a Chef</b></span>}
+            >
+              <img src={'https://spoonacular.com/cdn/ingredients_100x100/blue-cheese.png'} />
+            </GridTile>
+          </div>
           
         </div>
 
