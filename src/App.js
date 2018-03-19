@@ -17,6 +17,7 @@ import {
 } from './views';
 
 import createDinnerAPI from './lib/DinnerAPI';
+import ROUTES from './utils/routes';
 
 class App extends Component {
   
@@ -25,6 +26,7 @@ class App extends Component {
     numberOfGuests: 1,
     menu: [],
     selectedDish: undefined,
+    loading: false,
   }
 
   getAllDish = createDinnerAPI(fetch).getAllDish
@@ -33,6 +35,7 @@ class App extends Component {
 
   componentDidMount() {
     // TODO: use localStorage to load the state
+    // change loading state
   }
 
   changeNumberOfGuests = (newNumberOfGuests, incrementBy) => (state) => {
@@ -41,7 +44,7 @@ class App extends Component {
       newState.numberOfGuests = newNumberOfGuests;
     }
     else {
-      newState.numberOfGuests = state.newNumberOfGuests + incrementBy;
+      newState.numberOfGuests = state.numberOfGuests + incrementBy;
     }
     
     if(state.initialState === true) {
@@ -69,7 +72,7 @@ class App extends Component {
       return <WelcomeView />;
     }
     else {
-      return <Redirect to="/search" />;
+      return <Redirect to={ROUTES.search} />;
     }
   }
 
@@ -113,11 +116,11 @@ class App extends Component {
           <Header />
           <Router>
             <Fragment>
-              <Route exact path="/" render={this.renderWelcomeView}/>
-              <Route exact path="/total" render={this.renderTotalPriceView}/>
-              <Route exact path="/recipes" render={this.renderRecipesView}/>
-              <Route exact path="/search" render={this.renderDishSearchView}/>
-              <Route path="/search/:id" render={this.renderDishDetailsView}/>
+              <Route exact path={ROUTES.root} render={this.renderWelcomeView}/>
+              <Route exact path={ROUTES.total} render={this.renderTotalPriceView}/>
+              <Route exact path={ROUTES.recipes} render={this.renderRecipesView}/>
+              <Route exact path={ROUTES.search} render={this.renderDishSearchView}/>
+              <Route path={ROUTES.dish} render={this.renderDishDetailsView}/>
             </Fragment>
           </Router>
         </div>

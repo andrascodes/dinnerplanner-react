@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 
-const AppBarWithBackButton = ({ title, onBackButtonClick }) => {
-  return (
-    <AppBar
-      title={title}
-      iconElementLeft={
-        <IconButton>
-          <NavigationChevronLeft/>
-        </IconButton>
-      }
-      onLeftIconButtonClick={onBackButtonClick}
-    />
-  );
-};
+class AppBarWithBackButton extends Component {
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  render() {
+    return (
+      <AppBar
+        title={this.props.title}
+        iconElementLeft={
+          <IconButton>
+            <NavigationChevronLeft/>
+          </IconButton>
+        }
+        onLeftIconButtonClick={this.context.router.history.goBack}
+        {...this.props}
+      />
+    );
+  }
+}
 
 export default AppBarWithBackButton;

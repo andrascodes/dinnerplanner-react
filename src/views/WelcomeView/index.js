@@ -5,6 +5,8 @@ import './WelcomeView.css';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
+import ROUTES from '../../utils/routes';
+
 const WelcomeView = () => (
   <div className="WelcomeView">
     <p>
@@ -15,7 +17,7 @@ const WelcomeView = () => (
     </p>
     
     <div className="StartButtonContainer">
-      <Link to="/search">
+      <Link to={ROUTES.search}>
         <RaisedButton label="Start planning" primary={true} />
       </Link>
     </div>

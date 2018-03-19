@@ -19,6 +19,8 @@ import {
 
 import './Sidebar.css';
 
+import ROUTES from '../../utils/routes';
+
 const alignRight = {'textAlign': 'right' };
 
 const Sidebar = props => {
@@ -90,7 +92,7 @@ const Sidebar = props => {
       </div>
   
       <div className="ConfirmButtonContainer">
-        <Link to="/total">
+        <Link to={ROUTES.total}>
           <RaisedButton 
             label="Confirm Dinner" 
             primary={true}
