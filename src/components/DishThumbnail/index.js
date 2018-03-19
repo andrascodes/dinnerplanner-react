@@ -12,6 +12,7 @@ class DishThumbnail extends Component {
           key={'123'}
           title={'Hello GridTile'}
           subtitle={<span>by <b>a Chef</b></span>}
+          actionIcon={<div className="DishThumbnailPrice">{89.99}</div>}
         >
           <img src={'https://spoonacular.com/cdn/ingredients_100x100/blue-cheese.png'} alt={'Dish'}/>
         </GridTile>
