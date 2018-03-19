@@ -1,0 +1,7 @@
+export { default as DishThumbnail } from './DishThumbnail'
+export { default as Sidebar } from './Sidebar'
+export { default as DishSearch } from './DishSearch'
+export { default as DishDetails } from './DishDetails'
+export { default as Header } from './Header'
+export { default as Recipes } from './Recipes'
+export { default as TotalPrice } from './TotalPrice'

@@ -4,21 +4,27 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import './App.css';
 
-import Welcome from './Welcome';
-import Sidebar from './Sidebar';
-import DishSearch from './DishSearch';
-import DishDetails from './DishDetails';
-import TotalPrice from './TotalPrice';
-import Recipes from './Recipes';
+import {
+  Header
+} from './components';
+
+import {
+  WelcomeView,
+  DishSearchView,
+  DishDetailsView,
+  TotalPriceView,
+  RecipesView
+} from './views';
 
 import createDinnerAPI from './lib/DinnerAPI';
 
 class App extends Component {
   
   state = {
+    initialState: true,
     numberOfGuests: 1,
     menu: [],
-    selectedDish: undefined
+    selectedDish: undefined,
   }
 
   getAllDish = createDinnerAPI(fetch).getAllDish
@@ -29,81 +35,92 @@ class App extends Component {
     // TODO: use localStorage to load the state
   }
 
+  changeNumberOfGuests = (newNumberOfGuests, incrementBy) => (state) => {
+    const newState = {};
+    if(incrementBy === undefined) {
+      newState.numberOfGuests = newNumberOfGuests;
+    }
+    else {
+      newState.numberOfGuests = state.newNumberOfGuests + incrementBy;
+    }
+    
+    if(state.initialState === true) {
+      newState.initialState = false;
+    }
+    return newState;
+  }
+
   handleNumberOfGuestsChange = (event) => {
     event.persist();
     const isNum = /^\d+$/.test(event.target.value);
     if( event.target.value === '' || isNum ) {
-      this.setState({
-        numberOfGuests: Number(event.target.value)
-      });
+      this.setState(this.changeNumberOfGuests(Number(event.target.value)));
     }
   }
 
-  handleNumberOfGuestsIncrement = (value) => () => {
-    if(value > 0 || this.state.numberOfGuests > 0) {
-      this.setState(state => ({
-        numberOfGuests: state.numberOfGuests + value,
-      }))
+  handleNumberOfGuestsIncrement = (byValue) => () => {
+    if(byValue > 0 || this.state.numberOfGuests > 0) {
+      this.setState(this.changeNumberOfGuests(undefined, byValue));
     }
   }
 
   renderWelcomeView = () => {
-    if(this.state.numberOfGuests === 1 && this.state.menu.length === 0) {
-      return (
-        <div className="WelcomeView">
-          <Welcome />
-        </div>
-      )
+    if(this.state.initialState) {
+      return <WelcomeView />;
     }
     else {
-      return <Redirect to="/search"/>
+      return <Redirect to="/search" />;
     }
   }
 
-  renderTotalPriceView = () => (
-    <div className="TotalPriceView">
-      <TotalPrice />
-    </div>
+  renderTotalPriceView = props => (
+    <TotalPriceView
+      numberOfGuests={this.state.numberOfGuests}
+      {...props}
+    />
   )
 
-  renderRecipesView = () => (
-    <div className="RecipesView">
-      <Recipes />
-    </div>
+  renderRecipesView = props => (
+    <RecipesView 
+      numberOfGuests={this.state.numberOfGuests}
+      {...props}
+    />
   )
 
-  renderDishSearchView = () => (
-    <div className="DishSearchView">
-      <Sidebar 
-        numberOfGuests={this.state.numberOfGuests} 
-        menu={this.state.menu}
-        onNumberOfGuestsChange={this.handleNumberOfGuestsChange}
-        onNumberOfGuestsIncrease={this.handleNumberOfGuestsIncrement(1)} 
-        onNumberOfGuestsDecrease={this.handleNumberOfGuestsIncrement(-1)} 
-      />
-      <DishSearch getAllDish={this.getAllDish} />
-    </div>
+  renderDishSearchView = props => (
+    <DishSearchView 
+      numberOfGuests={this.state.numberOfGuests}
+      menu={this.state.menu} 
+      onNumberOfGuestsChange={this.handleNumberOfGuestsChange} 
+      onNumberOfGuestsIncrement={this.handleNumberOfGuestsIncrement}
+      getAllDish={this.getAllDish}
+      {...props}
+    />
   )
 
-  renderDishDetails = (props) => (
-    <div className="DishSearchView">
-      <Sidebar numberOfGuests={this.state.numberOfGuests}/>
-      <DishDetails getDish={this.getDish} {...props}/>
-    </div>
+  renderDishDetailsView = props => (
+    <DishDetailsView 
+      numberOfGuests={this.state.numberOfGuests}
+      getDish={this.getDish}
+      {...props}
+    />
   )
 
   render() {
     return (
       <MuiThemeProvider>
-        <Router>
-          <Fragment>
-            <Route exact path="/" render={this.renderWelcomeView}/>
-            <Route exact path="/total" render={this.renderTotalPriceView}/>
-            <Route exact path="/recipes" render={this.renderRecipesView}/>
-            <Route exact path="/search" render={this.renderDishSearchView}/>
-            <Route path="/search/:id" render={this.renderDishDetails}/>
-          </Fragment>
-        </Router>
+        <div className="App">
+          <Header />
+          <Router>
+            <Fragment>
+              <Route exact path="/" render={this.renderWelcomeView}/>
+              <Route exact path="/total" render={this.renderTotalPriceView}/>
+              <Route exact path="/recipes" render={this.renderRecipesView}/>
+              <Route exact path="/search" render={this.renderDishSearchView}/>
+              <Route path="/search/:id" render={this.renderDishDetailsView}/>
+            </Fragment>
+          </Router>
+        </div>
       </MuiThemeProvider>
     );
   }
