@@ -24,7 +24,12 @@ class App extends Component {
   state = {
     initialState: true,
     numberOfGuests: 1,
-    menu: [],
+    menu: [{
+      "id": 491119,
+      "name": "{Cookies -n- Cream Cupcakes}",
+      "image": "https://spoonacular.com/recipeImages/491119-556x370.jpg",
+      "preparation": "Mix the cake mix according to the package directions. Place 1 Tablespoon cake batter in the bottom of 24 cupcake liners. Place a cookie in the liner and cover with enough batter to fill the liners 3/4 full. Bake at 350* for 18 minutes. Let cool completely.Beat together the butter, shortening, salt, water, and vanilla until creamy. Slowly add the powdered sugar. Crush the remaining chocolate cookies. Remove 2 cups of the frosting and add the crushed cookies to that. Use a melon scooper to remove the center of each cupcake. Fill with the cookies and cream frosting.Swirl the vanilla frosting on top of all the cupcakes. Place cupcakes in freezer for 30 minutes. While they are chilling, scoop all the chocolate canned frosting into a microwave safe bowl and heat until slightly runny. (I did 30 seconds at a time and then stirred.) Repeat until the frosting is ready. Remove cupcakes from freezer and dip the top of the butter cream into the heated frosting. Carefully let the excess drip off, then top with sprinkles and let set. Makes 24 cupcakes."
+    }],
     selectedDish: undefined,
     loading: false,
   }
@@ -87,6 +92,7 @@ class App extends Component {
   renderRecipesView = props => (
     <RecipesView 
       numberOfGuests={this.state.numberOfGuests}
+      menu={this.state.menu}
       {...props}
     />
   )

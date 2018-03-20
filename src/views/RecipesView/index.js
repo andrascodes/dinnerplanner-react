@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Recipes } from '../../components'
 
-const RecipesView = ({ numberOfGuests }) => {
+const RecipesView = (props) => {
   return (
     <div className="RecipesView">
       <Recipes 
-        numberOfGuests={numberOfGuests}
+        {...props}
       />
     </div>
   );
