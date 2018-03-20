@@ -79,6 +79,7 @@ class App extends Component {
   renderTotalPriceView = props => (
     <TotalPriceView
       numberOfGuests={this.state.numberOfGuests}
+      menu={this.state.menu}
       {...props}
     />
   )

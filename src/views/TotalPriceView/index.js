@@ -4,11 +4,11 @@ import React from 'react';
 
 import { TotalPrice } from '../../components';
 
-const TotalPriceView = ({ numberOfGuests }) => {
+const TotalPriceView = (props) => {
   return (
     <div className="TotalPriceView">
       <TotalPrice 
-        numberOfGuests={numberOfGuests}
+        {...props}
       />
     </div>
   );

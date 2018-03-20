@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import './TotalPrice.css'
 
 import FlatButton from 'material-ui/FlatButton';
+import Carousel from 'nuka-carousel';
 
 import DishThumbnail from '../DishThumbnail';
 import AppBarWithBackButton from '../AppBarWithBackButton';
@@ -40,13 +41,16 @@ class TotalPrice extends Component {
         />
         
         <div className="TotalPriceContent">
-          <div className="MenuCarousel">
+          <Carousel
+            slidesToShow={1}
+            slidesToScroll={'auto'}
+          >
             {
-              [1, 2, 3, 4 ,5 ,6].map(dish => (
+              this.props.menu.map(dish => (
                 <DishThumbnail key={dish}/>
               ))
-            }          
-          </div>
+            }   
+          </Carousel>
         </div>
 
         <div className="TotalPriceFooterBar">

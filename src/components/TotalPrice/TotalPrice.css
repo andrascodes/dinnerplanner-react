@@ -10,9 +10,12 @@
   justify-content: center;
 }
 
-.MenuCarousel {
-  display: flex;
-  overflow-x: scroll;
+.slider-control-bottomcenter {
+  top: 100%;
+}
+
+.TotalPriceContent .DishThumbnail {
+  margin: auto;
 }
 
 .TotalPriceFooterBar {
