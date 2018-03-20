@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './DishSearchView.css';
 
@@ -7,23 +7,35 @@ import {
   DishSearch
 } from '../../components';
 
-const DishSearchView = ({ 
-  numberOfGuests, menu, 
-  onNumberOfGuestsChange, onNumberOfGuestsIncrement,
-  getAllDish 
-}) => {
-  return (
-    <div className="DishSearchView">
-      <Sidebar 
-        numberOfGuests={numberOfGuests} 
-        menu={menu}
-        onNumberOfGuestsChange={onNumberOfGuestsChange}
-        onNumberOfGuestsIncrease={onNumberOfGuestsIncrement(1)} 
-        onNumberOfGuestsDecrease={onNumberOfGuestsIncrement(-1)} 
-      />
-      <DishSearch getAllDish={getAllDish} />
-    </div>
-  );
-};
+class DishSearchView extends Component {
+
+  componentDidMount() {
+    if(this.props.dishes === undefined) {
+      this.props.fetchAllDishes()
+        .then(this.props.onFetchAllDishesResponse)
+    }
+  }
+
+  render() {
+
+    const { 
+      numberOfGuests, menu, dishes,
+      onNumberOfGuestsChange, onNumberOfGuestsIncrement,
+    } = this.props;
+
+    return (
+      <div className="DishSearchView">
+        <Sidebar 
+          numberOfGuests={numberOfGuests} 
+          menu={menu}
+          onNumberOfGuestsChange={onNumberOfGuestsChange}
+          onNumberOfGuestsIncrease={onNumberOfGuestsIncrement(1)} 
+          onNumberOfGuestsDecrease={onNumberOfGuestsIncrement(-1)} 
+        />
+        <DishSearch dishes={dishes}/>
+      </div>
+    );
+  }
+}
 
 export default DishSearchView;

@@ -7,11 +7,11 @@ import {
   DishDetails
 } from '../../components/';
 
-const DishDetailsView = ({ numberOfGuests, getDish }) => {
+const DishDetailsView = (props) => {
   return (
     <div className="DishDetailsView">
-      <Sidebar numberOfGuests={numberOfGuests} />
-      <DishDetails getDish={getDish} dishId={'id'} />
+      <Sidebar numberOfGuests={props.numberOfGuests} />
+      <DishDetails {...props}/>
     </div>
   );
 };

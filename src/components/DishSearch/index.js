@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
+import ReactLoading from 'react-loading';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -8,28 +10,21 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import DishThumbnail from '../DishThumbnail';
 
-import './DishSearch.css'
+import ROUTES from '../../utils/routes';
 
-class DishSearch extends Component {
-  
-  state = {
-    dishes: undefined
-  }
+import './DishSearch.css';
 
-  getAllDish = this.props.getAllDish
-
-  componentDidMount() {
-    // TODO: call this.getAllDish and set the state.dishes to the result
-  }
-  
-  render() {
+const renderDishSearch = (dishes) => {
+  if(dishes === undefined) {
     return (
-      <div className="DishSearch">
-        <AppBar
-          title="Find a dish"
-          showMenuIconButton={false}
-        />
-
+      <div className="Loading">
+        <ReactLoading type={'spin'} color={'black'} height='150px' width='150px' />
+      </div>
+    )
+  }
+  else {
+    return (
+      <Fragment>
         <div className="SearchInputGroup">
           <TextField
             floatingLabelText="Enter keywords"
@@ -55,15 +50,27 @@ class DishSearch extends Component {
 
         <div className="SearchResultsGallery">
           {
-            [1, 2, 3, 4, 5 ,6 ,7].map(dish => (
-              <DishThumbnail key={dish}/>
+            dishes.map(dish => (
+              <Link to={ROUTES.dishWithId(dish.id)}>
+                <DishThumbnail {...dish}/>
+              </Link>
             ))
           }          
         </div>
 
-      </div>
+      </Fragment>
     );
   }
 }
+
+const DishSearch = ({ dishes }) => (
+  <div className="DishSearch">
+    <AppBar
+      title="Find a dish"
+      showMenuIconButton={false}
+    />
+    {renderDishSearch(dishes)}
+  </div>
+)
 
 export default DishSearch;

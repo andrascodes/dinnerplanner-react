@@ -4,7 +4,8 @@ import './DishDetails.css';
 
 import AppBar from 'material-ui/AppBar';
 
-const DishDetails = () => {
+const DishDetails = (props) => {
+  console.log(props.match.params.id)
   return (
     <div className="DishDetails">
       <AppBar
