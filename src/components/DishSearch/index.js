@@ -51,7 +51,7 @@ const renderDishSearch = (dishes) => {
         <div className="SearchResultsGallery">
           {
             dishes.map(dish => (
-              <Link to={ROUTES.dishWithId(dish.id)}>
+              <Link key={`thumbnail-${dish.id}`} to={ROUTES.dishWithId(dish.id)}>
                 <DishThumbnail {...dish}/>
               </Link>
             ))
