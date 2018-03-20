@@ -23,9 +23,7 @@ const DishThumbnail = ({ id, name, image, price, subtitle }) => {
         subtitle={subtitle}
         actionIcon={createActionIcon(price)}
       >
-        <div className="DishThumbnailImageContainer" style={{ backgroundImage: `url(${image})`}}>
-          {/* <img src={image} alt={`${name}`}/> */}
-        </div>
+        <div className="DishThumbnailImageContainer" style={{ backgroundImage: `url(${image})`}}></div>
       </GridTile>
     </div>
   );

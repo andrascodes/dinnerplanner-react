@@ -22,7 +22,7 @@ const createSearchUrl = (type, filter) => {
 const createDishUrl = (id) => {
 
   const queryParams = [`includeNutrition=true`];
-  return `${baseRecipesUrl}/${id}/information${queryParams.join('&')}`
+  return `${baseRecipesUrl}/${id}/information?${queryParams.join('&')}`
 };
 
 const processResponse = (response) => {
@@ -37,35 +37,31 @@ const getResults = (response) => response.results;
 const handleError = (error) => {
   if (error.json) {
     error.json().then(error => {
-      console.error('getAllDishes() API Error:', error.message || error)
-    })
+      console.error('Dinner API Error:', error.message || error);
+    });
   } else {
-    console.error('getAllDishes() API Error:', error.message || error)
+    console.error('Dinner API Error:', error.message || error);
   }
 };
 
-const createDishObject = dish =>{
-  const recognizedDishTypes = [
-    "appetizer",
-    "mainCourse",
-    "sideDish",
-    "dessert",
-    "salad",
-    "bread",
-    "breakfast",
-    "soup",
-    "beverage",
-    "sauce",
-    "drink"
-  ];
-  
-  return ({
-    id: dish.id,
-    name: dish.title,
-    image: `https://spoonacular.com/recipeImages/${dish.image}`,
-    preparation: undefined,
-  });
-};
+const createDishObject = dish => ({
+  id: dish.id,
+  name: dish.title,
+  image: `https://spoonacular.com/recipeImages/${dish.image}`
+});
+
+const createDishDetailObject = dish => ({
+  id: dish.id,
+  name: dish.title,
+  image: dish.image,
+  price: dish.pricePerServing,
+  ingredients: dish.extendedIngredients.map(ingredient => ({
+    name: ingredient.name,
+    amount: ingredient.amount,
+    unit: ingredient.unit,
+  })),
+  preparation: dish.instructions,
+});
 
 const createDinnerAPI = fetch => ({
 
@@ -77,6 +73,7 @@ const createDinnerAPI = fetch => ({
 
   fetchDish: (id) => fetch(createDishUrl(id), httpOptions)
                   .then(processResponse)
+                  .then(createDishDetailObject)
                   .catch(handleError),
   
   

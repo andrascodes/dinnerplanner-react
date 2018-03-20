@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import ReactLoading from 'react-loading';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -9,6 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import DishThumbnail from '../DishThumbnail';
+import Loading from '../Loading'
 
 import ROUTES from '../../utils/routes';
 
@@ -16,11 +16,7 @@ import './DishSearch.css';
 
 const renderDishSearch = (dishes) => {
   if(dishes === undefined) {
-    return (
-      <div className="Loading">
-        <ReactLoading type={'spin'} color={'black'} height='150px' width='150px' />
-      </div>
-    )
+    return <Loading />
   }
   else {
     return (
@@ -71,6 +67,6 @@ const DishSearch = ({ dishes }) => (
     />
     {renderDishSearch(dishes)}
   </div>
-)
+);
 
 export default DishSearch;

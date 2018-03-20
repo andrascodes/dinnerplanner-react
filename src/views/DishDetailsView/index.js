@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './DishDetailsView.css'
 
@@ -7,13 +7,30 @@ import {
   DishDetails
 } from '../../components/';
 
-const DishDetailsView = (props) => {
-  return (
-    <div className="DishDetailsView">
-      <Sidebar numberOfGuests={props.numberOfGuests} />
-      <DishDetails {...props}/>
-    </div>
-  );
-};
+class DishDetailsView extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedDish: undefined
+    }
+  }
+
+  componentDidMount() {
+    if(this.state.selectedDish === undefined) {
+      this.props.fetchDish(this.props.match.params.id)
+        .then(dish => this.setState({ selectedDish: dish }))
+    }    
+  }
+
+  render() {
+    return (
+      <div className="DishDetailsView">
+        <Sidebar numberOfGuests={this.props.numberOfGuests} />
+        <DishDetails dish={this.state.selectedDish}/>
+      </div>
+    );
+  }
+}
 
 export default DishDetailsView;

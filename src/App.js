@@ -25,14 +25,7 @@ class App extends Component {
     initialState: true,
     numberOfGuests: 1,
     menu: [],
-    dishes: undefined,
-    selectedDish: undefined,
-  }
-
-  componentDidMount() {
-    // TODO: use localStorage to load the state
-    // change loading state
-    
+    dishes: undefined
   }
 
   fetchAllDishes = createDinnerAPI(fetch).fetchAllDishes
@@ -44,10 +37,10 @@ class App extends Component {
     })
   }
 
-  handleFetchDishResponse = (dish) => {
-    this.setState({
-      selectedDish: dish
-    })
+  handleAddToMenuButtonClick = (dish) => {
+    this.setState(state => ({
+      menu: state.menu.slice().push(dish)
+    }))
   }
 
   changeNumberOfGuests = (newNumberOfGuests, incrementBy) => (state) => {
@@ -104,7 +97,7 @@ class App extends Component {
   renderDishDetailsView = props => (
     <DishDetailsView 
       numberOfGuests={this.state.numberOfGuests}
-      getDish={this.getDish}
+      fetchDish={this.fetchDish}
       {...props}
     />
   )
