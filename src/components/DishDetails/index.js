@@ -29,13 +29,11 @@ class DishDetails extends Component {
     else {
       return (
         <div className="DishDetailsContent">
-          {/* <Card className="DishImageCard">
-            <CardMedia>
-              <img src={dish.image} alt={dish.name} />
-            </CardMedia>
-          </Card> */}
           <div className="DishImageAndIngredientsContainer">
-            <img className="DishImage" src={dish.image} alt={dish.name} />
+            {/* <img className="DishImage" src={dish.image} alt={dish.name} /> */}
+            <div className="DishImage" style={{
+              backgroundImage: `url(${dish.image})`
+            }} />
             <Card className="DishIngredientsCard">
               <CardTitle title="Ingredients" />
               <CardText>
