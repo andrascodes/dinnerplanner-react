@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './DishDetails.css';
 
-import AppBar from 'material-ui/AppBar';
+import AppBarWithBackButton from '../AppBarWithBackButton';
 import { Card, CardActions, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -62,9 +62,8 @@ class DishDetails extends Component {
   render() {
     return (
       <div className="DishDetails">
-        <AppBar
+        <AppBarWithBackButton
           title={(this.state.dish !== undefined) ? this.state.dish.name : 'Loading dish...'}
-          showMenuIconButton={false}
         />
         {this.renderDishDetails(this.state.dish)}
       </div>
