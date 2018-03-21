@@ -37,13 +37,15 @@ class App extends Component {
   }
 
   handleAddToMenuButtonClick = (dish) => () => {
-    this.setState(state => {
-      const newMenu = state.menu.slice();
-      newMenu.push(dish);
-      return {
-        menu: newMenu,
-      }
-    });
+    if(this.state.menu.some(dishInMenu => dishInMenu.id === dish.id) === false) {
+      this.setState(state => {
+        const newMenu = state.menu.slice();
+        newMenu.push(dish);
+        return {
+          menu: newMenu,
+        }
+      });
+    }
   }
 
   changeNumberOfGuests = (newNumberOfGuests, incrementBy) => (state) => {

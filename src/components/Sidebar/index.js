@@ -20,10 +20,17 @@ import {
 import './Sidebar.css';
 
 import ROUTES from '../../utils/routes';
+import trimNumber from '../../utils/trimNumber';
 
 const alignRight = {'textAlign': 'right' };
 
-const Sidebar = props => {
+const Sidebar = ({
+  numberOfGuests,
+  menu,
+  onNumberOfGuestsChange,
+  onNumberOfGuestsIncrease,
+  onNumberOfGuestsDecrease,
+}) => {
   return (
     <div className="Sidebar">
       
@@ -35,7 +42,7 @@ const Sidebar = props => {
         
         <FloatingActionButton 
           mini={true}
-          onClick={props.onNumberOfGuestsIncrease}
+          onClick={onNumberOfGuestsIncrease}
           className="GuestInputButton"
         >
           <AddIcon />
@@ -43,15 +50,15 @@ const Sidebar = props => {
         
         <TextField
           type="text"
-          value={props.numberOfGuests}
+          value={numberOfGuests}
           floatingLabelText="Guest number"
-          onChange={props.onNumberOfGuestsChange}
+          onChange={onNumberOfGuestsChange}
           className="GuestInputField"
         />
         
         <FloatingActionButton 
           mini={true}
-          onClick={props.onNumberOfGuestsDecrease}
+          onClick={onNumberOfGuestsDecrease}
           className="GuestInputButton"
         >
           <RemoveIcon />
@@ -81,13 +88,27 @@ const Sidebar = props => {
           <TableBody
             displayRowCheckbox={false}
           >
+            {
+              menu.map(dish => (
+                <TableRow key={`menu-${dish.id}`}>
+                  <TableRowColumn>{dish.name}</TableRowColumn>
+                  <TableRowColumn style={alignRight}>
+                    {trimNumber(numberOfGuests * dish.price, 2)}
+                  </TableRowColumn>
+                </TableRow>
+              ))
+            }
+          </TableBody>
+          <TableFooter>
             <TableRow>
-              <TableRowColumn>Apple Pie</TableRowColumn>
-              <TableRowColumn style={alignRight}>
-                79.05
+              <TableRowColumn>Total Cost:</TableRowColumn>
+              <TableRowColumn>
+                {trimNumber(
+                  menu.reduce((acc, curr) => acc += numberOfGuests * curr.price, 0), 2
+                )}
               </TableRowColumn>
             </TableRow>
-          </TableBody>
+          </TableFooter>
         </Table>
       </div>
   
