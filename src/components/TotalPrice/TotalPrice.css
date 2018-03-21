@@ -14,6 +14,12 @@
   top: 100%;
 }
 
+.CarouselItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .TotalPriceContent .DishThumbnail {
   margin: auto;
 }

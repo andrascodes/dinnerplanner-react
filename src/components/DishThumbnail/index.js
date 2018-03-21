@@ -18,7 +18,6 @@ const DishThumbnail = ({ id, name, image, price, subtitle }) => {
   return (
     <div className="DishThumbnail">
       <GridTile
-        key={`dish-${id}`}
         title={name}
         subtitle={subtitle}
         actionIcon={createActionIcon(price)}
