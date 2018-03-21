@@ -4,9 +4,20 @@ import './DishDetails.css';
 
 import AppBarWithBackButton from '../AppBarWithBackButton';
 import { Card, CardActions, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import {
+  Table,
+  TableBody,
+  TableFooter,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import Loading from '../Loading';
+
+import trimNumber from '../../utils/trimNumber';
 
 class DishDetails extends Component {
   
@@ -22,28 +33,70 @@ class DishDetails extends Component {
         .then(dish => this.setState({ dish }))
   }
 
-  renderDishDetails = dish => {
+  renderDishDetails = (dish, numberOfGuests, onAddToMenuButtonClick) => {
     if(dish === undefined) {
       return <Loading />;
     }
     else {
+      const alignRight = {'textAlign': 'right' };
+
       return (
         <div className="DishDetailsContent">
           <div className="DishImageAndIngredientsContainer">
-            {/* <img className="DishImage" src={dish.image} alt={dish.name} /> */}
             <div className="DishImage" style={{
               backgroundImage: `url(${dish.image})`
             }} />
             <Card className="DishIngredientsCard">
               <CardTitle title="Ingredients" />
               <CardText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                <Table
+                  fixedHeader={true}
+                  fixedFooter={true}
+                  selectable={false}
+                  multiSelectable={false}
+                >
+                  <TableHeader
+                    displaySelectAll={false}
+                    adjustForCheckbox={false}
+                  >
+                    <TableRow>
+                      <TableHeaderColumn>
+                        Amount
+                      </TableHeaderColumn>
+                      <TableHeaderColumn style={alignRight}>
+                        Ingredient
+                      </TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+
+                  <TableBody
+                    displayRowCheckbox={false}
+                  >
+                    {
+                      dish.ingredients.map(({ name, amount, unit }, index) => (
+                        <TableRow key={`${name}-${index}`}>
+                          <TableRowColumn>{`${trimNumber(numberOfGuests * amount, 2)} ${unit}`}</TableRowColumn>
+                          <TableRowColumn style={alignRight}>
+                            {name}
+                          </TableRowColumn>
+                        </TableRow>
+                      ))
+                    }
+                  </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TableRowColumn>Total Price:</TableRowColumn>
+                      <TableRowColumn>{trimNumber(numberOfGuests * dish.price, 2)}</TableRowColumn>
+                    </TableRow>
+                  </TableFooter>
+                </Table>
               </CardText>
               <CardActions>
-                <FlatButton label="Add To Menu" />
+                <RaisedButton 
+                  label="Add To Menu" 
+                  primary={true}
+                  onClick={onAddToMenuButtonClick(dish)} 
+                />
               </CardActions>
             </Card>
           </div>
@@ -65,7 +118,11 @@ class DishDetails extends Component {
         <AppBarWithBackButton
           title={(this.state.dish !== undefined) ? this.state.dish.name : 'Loading dish...'}
         />
-        {this.renderDishDetails(this.state.dish)}
+        {this.renderDishDetails(
+          this.state.dish, 
+          this.props.numberOfGuests, 
+          this.props.onAddToMenuButtonClick
+        )}
       </div>
     );
   }

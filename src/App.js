@@ -36,10 +36,14 @@ class App extends Component {
     })
   }
 
-  handleAddToMenuButtonClick = (dish) => {
-    this.setState(state => ({
-      menu: state.menu.slice().push(dish)
-    }))
+  handleAddToMenuButtonClick = (dish) => () => {
+    this.setState(state => {
+      const newMenu = state.menu.slice();
+      newMenu.push(dish);
+      return {
+        menu: newMenu,
+      }
+    });
   }
 
   changeNumberOfGuests = (newNumberOfGuests, incrementBy) => (state) => {
@@ -90,6 +94,7 @@ class App extends Component {
       fetchAllDishes={this.fetchAllDishes}
       onFetchAllDishesResponse={this.handleFetchAllDishesResponse}
       fetchDish={this.fetchDish}
+      onAddToMenuButtonClick={this.handleAddToMenuButtonClick}
       {...props}
     />
   )

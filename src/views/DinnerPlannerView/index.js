@@ -10,8 +10,8 @@ import {
 
 const renderView = (
   selectedDishId, { 
+    fetchDish, numberOfGuests, onAddToMenuButtonClick,
     dishes, fetchAllDishes, onFetchAllDishesResponse,
-    fetchDish
   }
 ) => {
 
@@ -29,6 +29,8 @@ const renderView = (
       <DishDetails 
         dishId={selectedDishId}
         fetchDish={fetchDish}
+        numberOfGuests={numberOfGuests}
+        onAddToMenuButtonClick={onAddToMenuButtonClick}
       />
     );
   }
