@@ -24,7 +24,9 @@ class App extends Component {
     initialState: true,
     numberOfGuests: 1,
     menu: [],
-    dishes: undefined
+    dishes: undefined,
+    showDishAddedNotification: false,
+    dishAddedNotificationMessage: undefined
   }
 
   fetchAllDishes = createDinnerAPI(fetch).fetchAllDishes
@@ -43,9 +45,24 @@ class App extends Component {
         newMenu.push(dish);
         return {
           menu: newMenu,
+          showDishAddedNotification: true,
+          dishAddedNotificationMessage: `'${dish.name}' added to the Menu`,
         }
       });
     }
+    else {
+      this.setState({
+        showDishAddedNotification: true,
+        dishAddedNotificationMessage: `Dish is already on the Menu`
+      });
+    }
+  }
+
+  handleDishAddedNotificationClose = () => {
+    this.setState({
+      showDishAddedNotification: false,
+      dishAddedNotificationMessage: undefined
+    });
   }
 
   changeNumberOfGuests = (newNumberOfGuests, incrementBy) => (state) => {
@@ -91,6 +108,9 @@ class App extends Component {
       numberOfGuests={this.state.numberOfGuests}
       menu={this.state.menu} 
       dishes={this.state.dishes}
+      showDishAddedNotification={this.state.showDishAddedNotification}
+      dishAddedNotificationMessage={this.state.dishAddedNotificationMessage}
+      onDishAddedNotificationClose={this.handleDishAddedNotificationClose}
       onNumberOfGuestsChange={this.handleNumberOfGuestsChange} 
       onNumberOfGuestsIncrement={this.handleNumberOfGuestsIncrement}
       fetchAllDishes={this.fetchAllDishes}

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import './DinnerPlanner.css';
 
+import Snackbar from 'material-ui/Snackbar';
+
 import {
   Sidebar,
   DishSearch,
@@ -40,6 +42,7 @@ const DinnerPlannerView = props => {
 
   const { 
     numberOfGuests, menu, dishes,
+    showDishAddedNotification, dishAddedNotificationMessage, onDishAddedNotificationClose,
     onNumberOfGuestsChange, onNumberOfGuestsIncrement,
   } = props;
 
@@ -53,6 +56,12 @@ const DinnerPlannerView = props => {
         onNumberOfGuestsDecrease={onNumberOfGuestsIncrement(-1)} 
       />
       { renderView(props.match.params.id, props) }
+      <Snackbar
+        open={showDishAddedNotification}
+        message={dishAddedNotificationMessage}
+        autoHideDuration={3000}
+        onRequestClose={onDishAddedNotificationClose}
+      />
     </div>
   );
 };

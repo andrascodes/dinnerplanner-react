@@ -24,7 +24,8 @@ class DishDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dish: undefined
+      dish: undefined,
+      open: true
     }
   }
 
@@ -118,11 +119,13 @@ class DishDetails extends Component {
         <AppBarWithBackButton
           title={(this.state.dish !== undefined) ? this.state.dish.name : 'Loading dish...'}
         />
-        {this.renderDishDetails(
-          this.state.dish, 
-          this.props.numberOfGuests, 
-          this.props.onAddToMenuButtonClick
-        )}
+        {
+          this.renderDishDetails(
+            this.state.dish, 
+            this.props.numberOfGuests, 
+            this.props.onAddToMenuButtonClick
+          )
+        }
       </div>
     );
   }
