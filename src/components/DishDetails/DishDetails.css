@@ -16,6 +16,12 @@
   flex-wrap: wrap;
 }
 
+.DishImage {
+  max-width: 100%; 
+  display:block; 
+  height: auto;
+}
+
 .DishIngredientsCard {
   flex: 1 1;
 }

@@ -10,8 +10,7 @@ import {
 
 import {
   WelcomeView,
-  DishSearchView,
-  DishDetailsView,
+  DinnerPlannerView,
   TotalPriceView,
   RecipesView
 } from './views';
@@ -80,9 +79,9 @@ class App extends Component {
       return <Redirect to={ROUTES.search} />;
     }
   }
-  
-  renderDishSearchView = props => (
-    <DishSearchView 
+
+  renderDinnerPlannerView = props => (
+    <DinnerPlannerView 
       numberOfGuests={this.state.numberOfGuests}
       menu={this.state.menu} 
       dishes={this.state.dishes}
@@ -90,13 +89,6 @@ class App extends Component {
       onNumberOfGuestsIncrement={this.handleNumberOfGuestsIncrement}
       fetchAllDishes={this.fetchAllDishes}
       onFetchAllDishesResponse={this.handleFetchAllDishesResponse}
-      {...props}
-    />
-  )
-
-  renderDishDetailsView = props => (
-    <DishDetailsView 
-      numberOfGuests={this.state.numberOfGuests}
       fetchDish={this.fetchDish}
       {...props}
     />
@@ -128,8 +120,8 @@ class App extends Component {
               <Route exact path={ROUTES.root} render={this.renderWelcomeView}/>
               <Route exact path={ROUTES.total} render={this.renderTotalPriceView}/>
               <Route exact path={ROUTES.recipes} render={this.renderRecipesView}/>
-              <Route exact path={ROUTES.search} render={this.renderDishSearchView}/>
-              <Route path={ROUTES.dish} render={this.renderDishDetailsView}/>
+              <Route exact path={ROUTES.search} render={this.renderDinnerPlannerView}/>
+              <Route path={ROUTES.dish} render={this.renderDinnerPlannerView}/>
             </Fragment>
           </Router>
         </div>
