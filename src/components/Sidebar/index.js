@@ -36,6 +36,7 @@ const Sidebar = ({
       
       <AppBar 
         title="My Dinner"
+        showMenuIconButton={false}
       />
 
       <div className="GuestInput">
