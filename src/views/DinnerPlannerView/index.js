@@ -14,6 +14,7 @@ const renderView = (
   selectedDishId, { 
     fetchDish, numberOfGuests, onAddToMenuButtonClick,
     dishes, fetchAllDishes, onFetchAllDishesResponse,
+    onTypeSelection, selectedType, onSearchFieldChange, searchFilter
   }
 ) => {
 
@@ -23,6 +24,10 @@ const renderView = (
         dishes={dishes}
         fetchAllDishes={fetchAllDishes}
         onFetchAllDishesResponse={onFetchAllDishesResponse}
+        onTypeSelection={onTypeSelection}
+        selectedType={selectedType}
+        onSearchFieldChange={onSearchFieldChange}
+        searchFilter={searchFilter}
       />
     );
   }

@@ -25,7 +25,10 @@ class TotalPrice extends Component {
   }
 
   calculateSlidesToShow = (menuLength) => {
-    if(menuLength < 3) {
+    if(menuLength === 0) {
+      return 1;
+    }
+    else if(menuLength < 3) {
       return menuLength;
     }
     else {

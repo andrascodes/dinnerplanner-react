@@ -14,17 +14,53 @@ import ROUTES from '../../utils/routes';
 
 import './DishSearch.css';
 
+const dishTypes = [
+  { text: 'All', value: 'all' },
+  { text: 'Appetizer', value: 'appetizer' },
+  { text: 'Main Course', value: 'main course' },
+  { text: 'Side Dish', value: 'side dish' },
+  { text: 'Dessert', value: 'dessert' },
+  { text: 'Salad', value: 'salad' },
+  { text: 'Bread', value: 'bread' },
+  { text: 'Breakfast', value: 'breakfast' },
+  { text: 'Soup', value: 'soup' },
+  { text: 'Beverage', value: 'beverage' },
+  { text: 'Sauce', value: 'sauce' },
+  { text: 'Drink', value: 'drink' },
+];
+
 class DishSearch extends Component {
 
-  componentDidMount() {
-    if(this.props.dishes === undefined) {
-      this.props.fetchAllDishes()
-        .then(this.props.onFetchAllDishesResponse)
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
     }
   }
 
-  renderDishSearch = (dishes) => {
-    if(dishes === undefined) {
+  componentDidMount() {
+    if(this.props.dishes === undefined) {
+      this.handleSearch();
+    }
+  }
+
+  handleSearch = (searchFilter, selectedType) => {
+    this.setState({ loading: true });
+    this.props.fetchAllDishes(searchFilter, selectedType)
+      .then(dishes => {
+        this.setState({ loading: false });
+        this.props.onFetchAllDishesResponse(dishes);
+      })
+  }
+
+  handleSearchButtonClick = () => {
+    this.handleSearch(this.props.searchFilter, this.props.selectedType);
+  }
+
+  renderDishSearch = ({ 
+    dishes, onSearchFieldChange, searchFilter, onTypeSelection, selectedType 
+  }) => {
+    if(this.state.loading === true || this.props.dishes === undefined) {
       return <Loading />;
     }
     else {
@@ -33,23 +69,26 @@ class DishSearch extends Component {
           <div className="SearchInputGroup">
             <TextField
               floatingLabelText="Enter keywords"
+              onChange={onSearchFieldChange}
+              value={searchFilter}
             />
   
             <SelectField
-              multiple={true}
               hintText="Select a type"
+              onChange={onTypeSelection}
+              value={selectedType}
             >
-              {['All', 'Starter', 'Main Course', 'Dessert'].map(type => (
+              {dishTypes.map(({ text, value }) => (
                 <MenuItem
-                  key={type}
+                  key={value}
                   insetChildren={true}
-                  value={type}
-                  primaryText={type}
+                  value={value}
+                  primaryText={text}
                 />
               ))}
             </SelectField>
   
-            <RaisedButton label="Search"/>
+            <RaisedButton label="Search" onClick={this.handleSearchButtonClick}/>
   
           </div>
   
@@ -75,7 +114,7 @@ class DishSearch extends Component {
           title="Find a dish"
           showMenuIconButton={false}
         />
-        {this.renderDishSearch(this.props.dishes)}
+        {this.renderDishSearch(this.props)}
       </div>
     );
   }

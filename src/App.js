@@ -23,10 +23,12 @@ class App extends Component {
   state = {
     initialState: true,
     numberOfGuests: 1,
+    selectedType: 'all',
+    searchFilter: '',
     menu: [],
     dishes: undefined,
     showDishAddedNotification: false,
-    dishAddedNotificationMessage: undefined
+    dishAddedNotificationMessage: ''
   }
 
   fetchAllDishes = createDinnerAPI(fetch).fetchAllDishes
@@ -35,7 +37,15 @@ class App extends Component {
   handleFetchAllDishesResponse = (dishes) => {
     this.setState({
       dishes
-    })
+    });
+  }
+
+  handleTypeSelection = (event, newValueIndex, newValue) => {
+    this.setState({ selectedType: newValue });
+  }
+
+  handleSearchFieldChange = (event, newValue) => {
+    this.setState({ searchFilter: newValue })
   }
 
   handleAddToMenuButtonClick = (dish) => () => {
@@ -61,7 +71,7 @@ class App extends Component {
   handleDishAddedNotificationClose = () => {
     this.setState({
       showDishAddedNotification: false,
-      dishAddedNotificationMessage: undefined
+      dishAddedNotificationMessage: ''
     });
   }
 
@@ -111,6 +121,10 @@ class App extends Component {
       showDishAddedNotification={this.state.showDishAddedNotification}
       dishAddedNotificationMessage={this.state.dishAddedNotificationMessage}
       onDishAddedNotificationClose={this.handleDishAddedNotificationClose}
+      onTypeSelection={this.handleTypeSelection}
+      selectedType={this.state.selectedType}
+      onSearchFieldChange={this.handleSearchFieldChange}
+      searchFilter={this.state.searchFilter}
       onNumberOfGuestsChange={this.handleNumberOfGuestsChange} 
       onNumberOfGuestsIncrement={this.handleNumberOfGuestsIncrement}
       fetchAllDishes={this.fetchAllDishes}
@@ -142,7 +156,7 @@ class App extends Component {
       <MuiThemeProvider>
         <div className="App">
           <Header />
-          <Router>
+          <Router basename={process.env.PUBLIC_URL}>
             <Fragment>
               <Route exact path={ROUTES.root} render={this.renderWelcomeView}/>
               <Route exact path={ROUTES.total} render={this.renderTotalPriceView}/>

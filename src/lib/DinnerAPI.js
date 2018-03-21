@@ -12,7 +12,7 @@ const createSearchUrl = (type, filter) => {
     queryParams.push(`type=${encodeURIComponent(type)}`);
   }
   
-  if (filter !== undefined && filter !== "") {
+  if (filter !== undefined && filter !== '') {
     queryParams.push(`query=${encodeURIComponent(filter)}`);
   }
   queryParams.push(`number=9`)
