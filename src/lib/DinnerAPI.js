@@ -68,13 +68,11 @@ const createDinnerAPI = fetch => ({
   fetchAllDishes: (type, filter) => fetch(createSearchUrl(type, filter), httpOptions)
                         .then(processResponse)
                         .then(getResults)
-                        .then(results => results.map(createDishObject))
-                        .catch(handleError),
+                        .then(results => results.map(createDishObject)),
 
   fetchDish: (id) => fetch(createDishUrl(id), httpOptions)
                   .then(processResponse)
                   .then(createDishDetailObject)
-                  .catch(handleError),
   
   
 });

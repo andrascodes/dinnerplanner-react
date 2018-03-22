@@ -47,7 +47,7 @@ const DinnerPlannerView = props => {
 
   const { 
     numberOfGuests, menu, dishes,
-    showDishAddedNotification, dishAddedNotificationMessage, onDishAddedNotificationClose,
+    showDishNotification, dishNotificationMessage, onDishAddedNotificationClose,
     onNumberOfGuestsChange, onNumberOfGuestsIncrement,
   } = props;
 
@@ -62,8 +62,8 @@ const DinnerPlannerView = props => {
       />
       { renderView(props.match.params.id, props) }
       <Snackbar
-        open={showDishAddedNotification}
-        message={dishAddedNotificationMessage}
+        open={showDishNotification}
+        message={dishNotificationMessage}
         autoHideDuration={3000}
         onRequestClose={onDishAddedNotificationClose}
       />

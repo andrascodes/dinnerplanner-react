@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import DishThumbnail from '../DishThumbnail';
 import Loading from '../Loading';
+import ErrorMessage from '../ErrorMessage';
 
 import ROUTES from '../../utils/routes';
 
@@ -35,6 +36,8 @@ class DishSearch extends Component {
     super(props);
     this.state = {
       loading: false,
+      error: false,
+      errorMessage: undefined
     }
   }
 
@@ -51,6 +54,7 @@ class DishSearch extends Component {
         this.setState({ loading: false });
         this.props.onFetchAllDishesResponse(dishes);
       })
+      .catch(error => this.setState({ error: true, errorMessage: error.message }))
   }
 
   handleSearchButtonClick = () => {
@@ -58,9 +62,13 @@ class DishSearch extends Component {
   }
 
   renderDishSearch = ({ 
-    dishes, onSearchFieldChange, searchFilter, onTypeSelection, selectedType 
+    dishes, onSearchFieldChange, searchFilter, onTypeSelection, selectedType,
+    loading, error, errorMessage
   }) => {
-    if(this.state.loading === true || this.props.dishes === undefined) {
+    if(error === true) {
+      return <ErrorMessage message={errorMessage} />;
+    }
+    else if(loading === true || dishes === undefined) {
       return <Loading />;
     }
     else {
@@ -114,7 +122,10 @@ class DishSearch extends Component {
           title="Find a dish"
           showMenuIconButton={false}
         />
-        {this.renderDishSearch(this.props)}
+        {this.renderDishSearch({
+          ...this.props,
+          ...this.state
+        })}
       </div>
     );
   }

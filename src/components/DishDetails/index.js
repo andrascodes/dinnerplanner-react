@@ -16,6 +16,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Loading from '../Loading';
+import ErrorMessage from '../ErrorMessage';
 
 import trimNumber from '../../utils/trimNumber';
 
@@ -25,17 +26,23 @@ class DishDetails extends Component {
     super(props);
     this.state = {
       dish: undefined,
-      open: true
+      open: true,
+      error: false,
+      errorMessage: undefined
     }
   }
 
   componentDidMount() {
     this.props.fetchDish(this.props.dishId)
-        .then(dish => this.setState({ dish }))
+      .then(dish => this.setState({ dish }))
+      .catch(error => this.setState({ error: true, errorMessage: error.message }))
   }
 
-  renderDishDetails = (dish, numberOfGuests, onAddToMenuButtonClick) => {
-    if(dish === undefined) {
+  renderDishDetails = ({dish, numberOfGuests, onAddToMenuButtonClick, error, errorMessage}) => {
+    if(error === true) {
+      return <ErrorMessage message={errorMessage} />;
+    }
+    else if(dish === undefined) {
       return <Loading />;
     }
     else {
@@ -120,11 +127,13 @@ class DishDetails extends Component {
           title={(this.state.dish !== undefined) ? this.state.dish.name : 'Loading dish...'}
         />
         {
-          this.renderDishDetails(
-            this.state.dish, 
-            this.props.numberOfGuests, 
-            this.props.onAddToMenuButtonClick
-          )
+          this.renderDishDetails({
+            dish: this.state.dish, 
+            numberOfGuests: this.props.numberOfGuests, 
+            onAddToMenuButtonClick: this.props.onAddToMenuButtonClick,
+            error: this.state.error,
+            errorMessage: this.state.errorMessage
+          })
         }
       </div>
     );

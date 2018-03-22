@@ -27,8 +27,8 @@ class App extends Component {
     searchFilter: '',
     menu: [],
     dishes: undefined,
-    showDishAddedNotification: false,
-    dishAddedNotificationMessage: ''
+    showDishNotification: false,
+    dishNotificationMessage: ''
   }
 
   fetchAllDishes = createDinnerAPI(fetch).fetchAllDishes
@@ -55,23 +55,32 @@ class App extends Component {
         newMenu.push(dish);
         return {
           menu: newMenu,
-          showDishAddedNotification: true,
-          dishAddedNotificationMessage: `'${dish.name}' added to the Menu`,
+          showDishNotification: true,
+          dishNotificationMessage: `'${dish.name}' added to the Menu`,
         }
       });
     }
     else {
       this.setState({
-        showDishAddedNotification: true,
-        dishAddedNotificationMessage: `Dish is already on the Menu`
+        showDishNotification: true,
+        dishNotificationMessage: `Dish is already on the Menu`
       });
     }
   }
 
+  handleDeleteMenuItemClick = (id) => () => {
+    this.setState(state => ({
+      menu: state.menu.filter(dish => dish.id !== id),
+      showDishNotification: true,
+      dishNotificationMessage: `'${state.menu.find(dish => dish.id === id).name}' 
+                                  was deleted from the Menu`,
+    }))
+  }
+
   handleDishAddedNotificationClose = () => {
     this.setState({
-      showDishAddedNotification: false,
-      dishAddedNotificationMessage: ''
+      showDishNotification: false,
+      dishNotificationMessage: ''
     });
   }
 
@@ -118,8 +127,8 @@ class App extends Component {
       numberOfGuests={this.state.numberOfGuests}
       menu={this.state.menu} 
       dishes={this.state.dishes}
-      showDishAddedNotification={this.state.showDishAddedNotification}
-      dishAddedNotificationMessage={this.state.dishAddedNotificationMessage}
+      showDishNotification={this.state.showDishNotification}
+      dishNotificationMessage={this.state.dishNotificationMessage}
       onDishAddedNotificationClose={this.handleDishAddedNotificationClose}
       onTypeSelection={this.handleTypeSelection}
       selectedType={this.state.selectedType}
