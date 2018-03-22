@@ -48,7 +48,7 @@ const DinnerPlannerView = props => {
   const { 
     numberOfGuests, menu, dishes,
     showDishNotification, dishNotificationMessage, onDishAddedNotificationClose,
-    onNumberOfGuestsChange, onNumberOfGuestsIncrement,
+    onNumberOfGuestsChange, onNumberOfGuestsIncrement, onDeleteMenuItemClick
   } = props;
 
   return (
@@ -58,7 +58,8 @@ const DinnerPlannerView = props => {
         menu={menu}
         onNumberOfGuestsChange={onNumberOfGuestsChange}
         onNumberOfGuestsIncrease={onNumberOfGuestsIncrement(1)} 
-        onNumberOfGuestsDecrease={onNumberOfGuestsIncrement(-1)} 
+        onNumberOfGuestsDecrease={onNumberOfGuestsIncrement(-1)}
+        onDeleteMenuItemClick={onDeleteMenuItemClick}
       />
       { renderView(props.match.params.id, props) }
       <Snackbar

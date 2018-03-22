@@ -7,6 +7,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
+import IconButton from 'material-ui/IconButton';
+import HighlightOffIcon from 'material-ui/svg-icons/action/highlight-off';
+
 import {
   Table,
   TableBody,
@@ -30,6 +33,7 @@ const Sidebar = ({
   onNumberOfGuestsChange,
   onNumberOfGuestsIncrease,
   onNumberOfGuestsDecrease,
+  onDeleteMenuItemClick
 }) => {
   return (
     <div className="Sidebar">
@@ -91,8 +95,13 @@ const Sidebar = ({
           >
             {
               menu.map(dish => (
-                <TableRow key={`menu-${dish.id}`}>
-                  <TableRowColumn>{dish.name}</TableRowColumn>
+                <TableRow key={`menu-${dish.id}`} className="SidebarMenuItemRow">
+                  <TableRowColumn className="SidebarMenuDishNameColumn">
+                    <IconButton className="DeleteMenuItemButton" onClick={onDeleteMenuItemClick(dish.id)}>
+                      <HighlightOffIcon/>
+                    </IconButton>
+                    {dish.name}
+                  </TableRowColumn>
                   <TableRowColumn style={alignRight}>
                     {trimNumber(numberOfGuests * dish.price, 2)}
                   </TableRowColumn>
@@ -100,16 +109,18 @@ const Sidebar = ({
               ))
             }
           </TableBody>
-          <TableFooter>
+
+          <TableFooter adjustForCheckbox={false}>
             <TableRow>
-              <TableRowColumn>Total Cost:</TableRowColumn>
-              <TableRowColumn>
+              <TableRowColumn style={alignRight}>Total Cost:</TableRowColumn>
+              <TableRowColumn style={alignRight}>
                 {trimNumber(
                   menu.reduce((acc, curr) => acc += numberOfGuests * curr.price, 0), 2
                 )}
               </TableRowColumn>
             </TableRow>
           </TableFooter>
+
         </Table>
       </div>
   

@@ -22,8 +22,17 @@
   text-align: center;
 }
 
-.CostColumn {
-  text-align: right;
+.SidebarMenuDishNameColumn {
+  display: flex;
+  align-items: center;
+}
+
+.SidebarMenuDishNameColumn .DeleteMenuItemButton {
+  opacity: 0;
+}
+
+.SidebarMenuItemRow:hover .DeleteMenuItemButton {
+  opacity: 1;
 }
 
 .ConfirmButtonContainer {

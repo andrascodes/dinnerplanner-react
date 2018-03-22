@@ -140,6 +140,7 @@ class App extends Component {
       onFetchAllDishesResponse={this.handleFetchAllDishesResponse}
       fetchDish={this.fetchDish}
       onAddToMenuButtonClick={this.handleAddToMenuButtonClick}
+      onDeleteMenuItemClick={this.handleDeleteMenuItemClick}
       {...props}
     />
   )
