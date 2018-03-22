@@ -16,7 +16,11 @@ import {
 } from './views';
 
 import createDinnerAPI from './lib/DinnerAPI';
+import createStorageAPI from './lib/StorageAPI';
 import ROUTES from './utils/routes';
+
+const DinnerAPI = createDinnerAPI(fetch);
+const StorageAPI = createStorageAPI(window.localStorage);
 
 class App extends Component {
   
@@ -31,8 +35,30 @@ class App extends Component {
     dishNotificationMessage: ''
   }
 
-  fetchAllDishes = createDinnerAPI(fetch).fetchAllDishes
-  fetchDish = createDinnerAPI(fetch).fetchDish
+  fetchAllDishes = DinnerAPI.fetchAllDishes
+  fetchDish = DinnerAPI.fetchDish
+
+  saveMenu = StorageAPI.saveMenu
+  loadMenu = StorageAPI.loadMenu
+  saveNumberOfGuests = StorageAPI.saveNumberOfGuests
+  loadNumberOfGuests = StorageAPI.loadNumberOfGuests
+
+  componentDidMount() {
+    const menu = this.loadMenu();
+    const numberOfGuests = this.loadNumberOfGuests();
+
+    const newState = {};
+    if(menu !== null) {
+      newState.menu = menu;
+      newState.initialState = false;
+    }
+    if(numberOfGuests !== null) {
+      newState.numberOfGuests = numberOfGuests;
+      newState.initialState = false;
+    }
+
+    this.setState(newState);
+  }
 
   handleFetchAllDishesResponse = (dishes) => {
     this.setState({
@@ -50,14 +76,13 @@ class App extends Component {
 
   handleAddToMenuButtonClick = (dish) => () => {
     if(this.state.menu.some(dishInMenu => dishInMenu.id === dish.id) === false) {
-      this.setState(state => {
-        const newMenu = state.menu.slice();
-        newMenu.push(dish);
-        return {
-          menu: newMenu,
-          showDishNotification: true,
-          dishNotificationMessage: `'${dish.name}' added to the Menu`,
-        }
+      const newMenu = this.state.menu.slice();
+      newMenu.push(dish);
+      this.saveMenu(newMenu);
+      this.setState({
+        menu: newMenu,
+        showDishNotification: true,
+        dishNotificationMessage: `'${dish.name}' added to the Menu`,
       });
     }
     else {
@@ -69,12 +94,14 @@ class App extends Component {
   }
 
   handleDeleteMenuItemClick = (id) => () => {
+    const newMenu = this.state.menu.filter(dish => dish.id !== id);
+    this.saveMenu(newMenu);
     this.setState(state => ({
-      menu: state.menu.filter(dish => dish.id !== id),
+      menu: newMenu,
       showDishNotification: true,
       dishNotificationMessage: `'${state.menu.find(dish => dish.id === id).name}' 
                                   was deleted from the Menu`,
-    }))
+    }));
   }
 
   handleDishAddedNotificationClose = () => {
@@ -96,6 +123,7 @@ class App extends Component {
     if(state.initialState === true) {
       newState.initialState = false;
     }
+    this.saveNumberOfGuests(newState.numberOfGuests);
     return newState;
   }
 
