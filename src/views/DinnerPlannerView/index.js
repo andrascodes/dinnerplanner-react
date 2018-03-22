@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Media from "react-media";
 
 import './DinnerPlanner.css';
 
@@ -53,15 +54,24 @@ const DinnerPlannerView = props => {
 
   return (
     <div className="DinnerPlannerView">
-      <Sidebar 
-        numberOfGuests={numberOfGuests} 
-        menu={menu}
-        onNumberOfGuestsChange={onNumberOfGuestsChange}
-        onNumberOfGuestsIncrease={onNumberOfGuestsIncrement(1)} 
-        onNumberOfGuestsDecrease={onNumberOfGuestsIncrement(-1)}
-        onDeleteMenuItemClick={onDeleteMenuItemClick}
-      />
+      <Media query="(max-width: 768px)">
+        {
+          matches => (
+            <Sidebar 
+              numberOfGuests={numberOfGuests} 
+              menu={menu}
+              onNumberOfGuestsChange={onNumberOfGuestsChange}
+              onNumberOfGuestsIncrease={onNumberOfGuestsIncrement(1)} 
+              onNumberOfGuestsDecrease={onNumberOfGuestsIncrement(-1)}
+              onDeleteMenuItemClick={onDeleteMenuItemClick}
+              mobile={matches}
+            />
+          )
+        }
+      </Media>
+
       { renderView(props.match.params.id, props) }
+
       <Snackbar
         open={showDishNotification}
         message={dishNotificationMessage}
