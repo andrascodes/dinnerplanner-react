@@ -1,5 +1,7 @@
 # Dinner Planner React
-The React version of the Dinnerplanner assignment for KTH's Interaction Programming course
+The React version of the Dinnerplanner assignment for KTH's Interaction Programming course.
+
+Click [here](https://andrewszucs.github.io/dinnerplanner-react/) for the DEMO.
 
 ## How to get started
 
