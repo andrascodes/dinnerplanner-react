@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Media from "react-media";
 
 import './DinnerPlanner.css';
@@ -47,7 +47,7 @@ const renderView = (
 const DinnerPlannerView = props => {
 
   const { 
-    numberOfGuests, menu, dishes,
+    numberOfGuests, menu,
     showDishNotification, dishNotificationMessage, onDishAddedNotificationClose,
     onNumberOfGuestsChange, onNumberOfGuestsIncrement, onDeleteMenuItemClick
   } = props;

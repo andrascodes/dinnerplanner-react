@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './DishDetails.css';
 
 import AppBarWithBackButton from '../AppBarWithBackButton';
-import { Card, CardActions, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card';
 import {
   Table,
   TableBody,

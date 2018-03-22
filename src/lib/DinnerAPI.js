@@ -34,16 +34,6 @@ const processResponse = (response) => {
 
 const getResults = (response) => response.results; 
 
-const handleError = (error) => {
-  if (error.json) {
-    error.json().then(error => {
-      console.error('Dinner API Error:', error.message || error);
-    });
-  } else {
-    console.error('Dinner API Error:', error.message || error);
-  }
-};
-
 const createDishObject = dish => ({
   id: dish.id,
   name: dish.title,
