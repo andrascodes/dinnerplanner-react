@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Media from 'react-media';
 
 import './TotalPrice.css'
 
@@ -24,7 +25,7 @@ class TotalPrice extends Component {
     }).isRequired
   }
 
-  calculateSlidesToShow = (menuLength) => {
+  calculateSlidesToShow = (menuLength, maxLength) => {
     if(menuLength === 0) {
       return 1;
     }
@@ -32,42 +33,60 @@ class TotalPrice extends Component {
       return menuLength;
     }
     else {
-      return 3;
+      return maxLength;
     }
   }
 
+  renderCarousel = ({ slidesToShow, menu }) => () => {
+    return (
+      <Carousel
+        slidesToShow={slidesToShow}
+        slidesToScroll={'auto'}
+      >
+        {
+          menu.map(dish => (
+            <div className="CarouselItem" key={`dish-${dish.id}`}>
+              <DishThumbnail 
+                {...dish}
+              />
+            </div>
+          ))
+        }   
+      </Carousel>
+    );
+  }
+
   render() {
-    const sliderSettings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
+
+    const { menu, numberOfGuests } = this.props;
 
     return (
       <div className="TotalPrice">
         <AppBarWithBackButton
-          title={`My Dinner: ${this.props.numberOfGuests} people`}
+          title={`My Dinner: ${numberOfGuests} people`}
           iconElementRight={<FlatButton label="Print Recipes" />}
           onRightIconButtonClick={() => this.context.router.history.push(ROUTES.recipes)}
         />
         
         <div className="TotalPriceContent">
-          <Carousel
-            slidesToShow={this.calculateSlidesToShow(this.props.menu.length)}
-            slidesToScroll={'auto'}
-          >
-            {
-              this.props.menu.map(dish => (
-                <div className="CarouselItem" key={`dish-${dish.id}`}>
-                  <DishThumbnail 
-                    {...dish}
-                  />
-                </div>
-              ))
-            }   
-          </Carousel>
+          <Media
+            query="(min-width: 941px)"
+            render={this.renderCarousel({ 
+              slidesToShow: this.calculateSlidesToShow(menu, 3), menu: menu 
+            })}
+          />
+          <Media
+            query="(max-width: 940px) and (min-width: 630px)"
+            render={this.renderCarousel({ 
+              slidesToShow: this.calculateSlidesToShow(menu, 2), menu: menu 
+            })}
+          />
+          <Media
+            query="(max-width: 629px)"
+            render={this.renderCarousel({ 
+              slidesToShow: 1, menu: menu 
+            })}
+          />
         </div>
 
         <div className="TotalPriceFooterBar">
@@ -76,8 +95,8 @@ class TotalPrice extends Component {
             <span className="TotalPriceValue">
               {
                 ` ${
-                    trimNumber(this.props.menu.reduce((acc, curr) => (
-                      acc += this.props.numberOfGuests* curr.price
+                    trimNumber(menu.reduce((acc, curr) => (
+                      acc += numberOfGuests * curr.price
                     ), 0), 2)
                   } `
               }

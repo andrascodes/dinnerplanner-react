@@ -1,7 +1,5 @@
 import React from 'react';
 
-// import './TotalPriceView.css';
-
 import { TotalPrice } from '../../components';
 
 const TotalPriceView = (props) => {
