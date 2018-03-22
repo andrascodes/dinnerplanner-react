@@ -27,9 +27,6 @@ import trimNumber from '../../utils/trimNumber';
 
 const alignRight = {'textAlign': 'right' };
 
-// Change to Class, add state for display: none, block
-// On desktop can't change class because button disappears
-
 class Sidebar extends Component {
 
   constructor(props) {
@@ -50,13 +47,14 @@ class Sidebar extends Component {
     })
   }
 
-  renderAppBar = (isMobile) => {
+  renderAppBar = (isMobile, totalCost) => {
     if(isMobile === true) {
       return (
         <AppBar 
           title="My Dinner"
           showMenuIconButton={true}
           onLeftIconButtonClick={this.handleShowSidebarContentButtonClick}
+          iconElementRight={<div className="MobileAppBarTotalCost">Total Cost: {totalCost}</div>}
         />
       );
     }
@@ -97,11 +95,15 @@ class Sidebar extends Component {
       onDeleteMenuItemClick,
       mobile
     } = this.props;
+    
+    const totalCost = trimNumber(
+      menu.reduce((acc, curr) => acc += numberOfGuests * curr.price, 0), 2
+    );
 
     return (
       <div className="Sidebar">
       
-        {this.renderAppBar(mobile)}
+        {this.renderAppBar(mobile, totalCost)}
 
         <div 
           className="SidebarContent" 
@@ -178,9 +180,7 @@ class Sidebar extends Component {
                 <TableRow>
                   <TableRowColumn style={alignRight}>Total Cost:</TableRowColumn>
                   <TableRowColumn style={alignRight}>
-                    {trimNumber(
-                      menu.reduce((acc, curr) => acc += numberOfGuests * curr.price, 0), 2
-                    )}
+                    {totalCost}
                   </TableRowColumn>
                 </TableRow>
               </TableFooter>
