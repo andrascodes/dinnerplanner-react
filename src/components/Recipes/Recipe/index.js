@@ -5,15 +5,18 @@ import './Recipe.css';
 const Recipe = ({ name, image, preparation }) => {
   return (
     <div className="Recipe">
-      <div className="RecipeNameAndImageContainer">
-        <img src={image} alt={name} className="RecipeImage"/>
-        <div className="RecipeName">
-          {name}
-        </div>
-      </div>
+      <h2 className="RecipeName">
+        {name}
+      </h2>
 
-      <div className="RecipePreparation">
-        {preparation}
+      <div className="RecipeImageAndPreparationContainer">
+        <div className="RecipeImageContainer">
+          <img src={image} alt={name} className="RecipeImage"/>
+        </div>
+
+        <div className="RecipePreparation">
+          <p>{preparation}</p>
+        </div>
       </div>
     </div>
   );

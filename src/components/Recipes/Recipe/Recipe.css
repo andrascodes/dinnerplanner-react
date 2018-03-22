@@ -1,3 +1,33 @@
 .Recipe {
   display: flex;
+  flex-direction: column;
+  margin: 0 2rem;
+}
+
+.RecipeImage {
+  height: 12rem;
+}
+
+.RecipeImageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.RecipeImageAndPreparationContainer {
+  display: flex;
+}
+
+.RecipePreparation {
+  margin-left: 2rem;
+}
+
+@media (max-width: 768px)  { 
+  .RecipeImageAndPreparationContainer {
+    flex-direction: column;
+  }
+
+  .RecipePreparation {
+    margin-left: 0;
+  }
 }
