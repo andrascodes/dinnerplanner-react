@@ -100,11 +100,13 @@ class DishDetails extends Component {
                 </Table>
               </CardText>
               <CardActions>
-                <RaisedButton 
-                  label="Add To Menu" 
-                  primary={true}
-                  onClick={onAddToMenuButtonClick(dish)} 
-                />
+                <div className="AddToMenuButtonContainer">
+                  <RaisedButton 
+                    label="Add To Menu" 
+                    primary={true}
+                    onClick={onAddToMenuButtonClick(dish)}
+                  />
+                </div>
               </CardActions>
             </Card>
           </div>
