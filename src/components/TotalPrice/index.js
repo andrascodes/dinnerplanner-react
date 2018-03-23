@@ -72,13 +72,13 @@ class TotalPrice extends Component {
           <Media
             query="(min-width: 941px)"
             render={this.renderCarousel({ 
-              slidesToShow: this.calculateSlidesToShow(menu, 3), menu: menu 
+              slidesToShow: this.calculateSlidesToShow(menu.length, 3), menu: menu 
             })}
           />
           <Media
             query="(max-width: 940px) and (min-width: 630px)"
             render={this.renderCarousel({ 
-              slidesToShow: this.calculateSlidesToShow(menu, 2), menu: menu 
+              slidesToShow: this.calculateSlidesToShow(menu.length, 2), menu: menu 
             })}
           />
           <Media
