@@ -26,7 +26,6 @@ class DishDetails extends Component {
     super(props);
     this.state = {
       dish: undefined,
-      open: true,
       error: false,
       errorMessage: undefined
     }
